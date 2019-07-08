@@ -1,6 +1,5 @@
 import unittest
 import boggle
-
 from string import ascii_uppercase
 
 class TestBoggle(unittest.TestCase):
@@ -91,7 +90,11 @@ class TestBoggle(unittest.TestCase):
         
         print("twoLeterWord = ", twoLetterWord, "threeLetterWord = ", threeLetterWord, "notThereWord = ", notThereWord)
         
-        dictionary = [twoLetterWord, threeLetterWord, notThereWord]
+        full_words = [twoLetterWord, threeLetterWord, notThereWord]
+        stems = ['A', 'AB', 'E', 'EE']
+        dictionary = full_words, stems
+        print("full_words = ", full_words)
+        print("stems = ", stems)
         print("dictionary = ", dictionary)
         
         foundWords = boggle.search(grid, dictionary)

@@ -1,7 +1,6 @@
 from string import ascii_uppercase
 from random import choice
 
-
 def make_grid(width, height):
     """
     Creates a grid that will hold all the tiles for a boggle game
@@ -58,6 +57,7 @@ def path_to_word(grid, path):
     """
     return ''.join([grid[p] for p in path])
     
+    
 def search(grid, dictionary):
     """
     Search through the paths to locate words by matching
@@ -66,14 +66,11 @@ def search(grid, dictionary):
     
     neighbours = all_grid_neighbours(grid)
     paths = []
-    full_words, stems = dictionary
     
     def do_search(path):
         word = path_to_word(grid, path)
-        if word in full_words:
+        if word in dictionary:
             paths.append(path)
-        if word not in stems:
-            return
         
         for next_pos in neighbours[path[-1]]:
             if next_pos not in path:
@@ -84,8 +81,12 @@ def search(grid, dictionary):
         
     words = []
     
+    print("final paths = ", paths)
+    
     for path in paths:
+        print("final: path = ", path)
         words.append(path_to_word(grid, path))
+        print("words = ", words)
     return set(words)
         
     
@@ -94,54 +95,26 @@ def get_dictionary(dictionary_file):
     """
     Load dictionary file
     """
-    
-    full_words, stems = set(), set()
-    
     with open(dictionary_file) as f:
-        for word in f:
-            word = word.strip().upper()
-            full_words.add(word)
-            print("full_words = ", full_words)
-            
-            for i in range(1, len(word)):
-                stems.add(word[:i])
-                print("i = ", i, " stems = ", stems)
-    
-                
-    return full_words, stems
+        return[w.strip().upper() for w in f]
         
-        
-def display_words(words):
-    for word in words:
-        print(word)
-        
-    print("found %s words " % len(words))
-    
     
 # This is the main program control function
 def main():
     """
     This is the function that will run the whole project
     """
-    
     grid = make_grid(3, 3)
     dictionary = get_dictionary('words.txt')
     words = search(grid, dictionary)
-    display_words(words)
-    
+    for word in words:
+        print(word)
+        
+    print("found %s words " % len(words))
     
 
-    
-if __name__ == "__main__":
-    # The program is run from here        
-    # Code in here will only execution when the file is run directly 
-    # i.e. it wont run when test.boggle is run
-
-    main()
-    
-    
-    
-    
+# The program is run from here        
+main()
 
     
     
