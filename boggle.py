@@ -99,8 +99,22 @@ def get_dictionary(dictionary_file):
         return[w.strip().upper() for w in f]
         
     
+# This is the main program control function
+def main():
+    """
+    This is the function that will run the whole project
+    """
+    grid = make_grid(3, 3)
+    dictionary = get_dictionary('words.txt')
+    words = search(grid, dictionary)
+    for word in words:
+        print(word)
+        
+    print("found %s words " % len(words))
     
-    
-    
+
+# The program is run from here        
+main()
+
     
     
